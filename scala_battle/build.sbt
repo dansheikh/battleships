@@ -4,7 +4,9 @@ organization := "sheikh"
 
 version := "1.0"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.8-local"
+
+connectInput in run := true
 
 mainClass in (Compile, packageBin) := Some("com.battleship.Game")
 
