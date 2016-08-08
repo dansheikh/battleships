@@ -4,7 +4,7 @@ organization := "sheikh"
 
 version := "1.0"
 
-scalaVersion := "2.11.8-local"
+scalaVersion := "2.11.8"
 
 connectInput in run := true
 
