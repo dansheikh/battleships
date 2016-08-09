@@ -55,6 +55,24 @@ class Game(val n: Integer = 2) {
     loc
   }
 
+  def launcher(): Vector[Set[(Int,Int)]] = {
+    val axis = Random.nextInt(2)
+    val loc = if (axis == 0) {
+      val lat = Random.nextInt(10)
+      val lon = Random.nextInt(8)
+
+      val bow = (lat, lon)
+      (bow +: 1.to(2).map(x => (bow._1, bow._2 + x))).toSet
+    } else {
+      val lat = Random.nextInt(8)
+      val lon = Random.nextInt(10)
+
+      val bow = (lat, lon)
+      (bow +: 1.to(2).map(x => (bow._1 + x, bow._2))).toSet
+    }
+    Vector(loc)
+  }
+
   def mergeMaps(map1: Map[(Int, Int), Frigate], map2: Map[(Int, Int), Frigate]): Map[(Int, Int), Frigate] = {
     val list1 = map1.toList
     val list2 = map2.toList
