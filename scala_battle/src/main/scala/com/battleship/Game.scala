@@ -55,7 +55,7 @@ class Game(val n: Integer = 2) {
     loc
   }
 
-  def launcher(): Vector[Set[(Int,Int)]] = {
+  def launcher(): Set[(Int,Int)] = {
     val axis = Random.nextInt(2)
     val loc = if (axis == 0) {
       val lat = Random.nextInt(10)
@@ -70,7 +70,30 @@ class Game(val n: Integer = 2) {
       val bow = (lat, lon)
       (bow +: 1.to(2).map(x => (bow._1 + x, bow._2))).toSet
     }
-    Vector(loc)
+    loc
+  }
+
+  def boardCheck(finalBoard: Vector[Set[(Int,Int)]], possibleLocation: Set[(Int,Int)]): Vector[Set[(Int,Int)]] = {
+    if(!finalBoard.filter(x => !x.intersect(possibleLocation).isEmpty).isEmpty){
+      boardCheck(finalBoard,launcher())
+    }
+    else{
+      finalBoard :+ possibleLocation
+    }
+  }
+
+  def fillBoard(counter: Int, board: Vector[Set[(Int,Int)]]): Vector[Set[(Int,Int)]] = {
+
+  if(counter > 0) {
+    fillBoard(counter - 1, boardCheck(board, launcher()))
+  }
+  else {
+    board
+    }
+  }
+
+  def createBoard(): Vector[Set[(Int,Int)]] = {
+    fillBoard(2,Vector(launcher()))
   }
 
   def mergeMaps(map1: Map[(Int, Int), Frigate], map2: Map[(Int, Int), Frigate]): Map[(Int, Int), Frigate] = {
