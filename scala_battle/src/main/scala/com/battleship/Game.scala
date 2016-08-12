@@ -115,6 +115,38 @@ class Game(val n: Integer = 2) {
     }
   }
 
+  def runGame(gameBoard: Vector[Set[(Int,Int)]], shotCounter: Int, missLocs: List[(Int,Int)], hitLocs: List[(Int,Int)]): Vector[Set[(Int,Int)]] = {
+    println("Shots Remaining: " + (20-shotCounter))
+    println("Miss Locations: " + missLocs)
+    println("Hit Locations: " + hitLocs)
+    println("Enter the X coordinate of your attack")
+    val x = readInt()
+    println("Enter the Y coordinate of your attack")
+    val y = readInt()
+
+    val newBoard = barrage(x,y,gameBoard)
+    if(newBoard._2.isEmpty){
+      println("All Frigates Sunk!")
+      newBoard._2
+    }
+    else if(shotCounter+1 >= 20){
+      println("No Shots Remaining")
+      println("Remaining Frigate Locations: ")
+      println(newBoard._2)
+      newBoard._2
+    }
+    else{
+      println("")
+      if(newBoard._1){
+        runGame(newBoard._2, shotCounter+1, missLocs, (x,y) :: hitLocs)
+      }
+      else {
+        runGame(newBoard._2, shotCounter + 1, (x, y) :: missLocs, hitLocs)
+      }
+    }
+
+  }
+
   def mergeMaps(map1: Map[(Int, Int), Frigate], map2: Map[(Int, Int), Frigate]): Map[(Int, Int), Frigate] = {
     val list1 = map1.toList
     val list2 = map2.toList
