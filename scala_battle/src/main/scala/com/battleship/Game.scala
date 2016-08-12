@@ -96,6 +96,25 @@ class Game(val n: Integer = 2) {
     fillBoard(2,Vector(launcher()))
   }
 
+  def barrage(x: Int, y: Int, finalBoard: Vector[Set[(Int,Int)]]): (Boolean, Vector[Set[(Int,Int)]]) = {
+    val interim = finalBoard.partition(a => a.contains((x,y)))
+
+    if(interim._1.isEmpty){
+      println("Miss!")
+      (false,interim._2)
+    }
+    else{
+      println("Hit!")
+      if(interim._1.head.size == 1){
+        println("Frigate Sunk!!")
+        (true,interim._2)
+      }
+      else{
+        (true, interim._2 :+ (interim._1.head.filter(a => a!= (x,y))))
+      }
+    }
+  }
+
   def mergeMaps(map1: Map[(Int, Int), Frigate], map2: Map[(Int, Int), Frigate]): Map[(Int, Int), Frigate] = {
     val list1 = map1.toList
     val list2 = map2.toList
