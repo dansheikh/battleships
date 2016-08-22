@@ -1,8 +1,9 @@
+package com.battleship
 import org.scalatest.FunSuite
-import com.battleship.Game
-import com.battleship.Frigate
+
 
 class GameSuite extends FunSuite {
+
 
   val game = new Game()
 
@@ -39,12 +40,21 @@ class GameSuite extends FunSuite {
 
   }
 
-  test("Merge Maps Test - relies on ListMerge"){
+  test("Merge Maps Test - relies on MergeLists"){
     val frigate1 = new Frigate("frigate1", 3)
     val frigate2 = new Frigate("frigate2", 3)
 
     assert(Map((0,0) -> frigate1, (0,1) -> frigate2) == game.mergeMaps(Map((0,0) -> frigate1), Map((0,1) -> frigate2)))
   }
 
+  test("Barrage Test"){
+    val gameBoard = game.createBoard()
+    val coordinate = gameBoard.head.head
 
+    val newBoard = game.barrage(coordinate._1, coordinate._2, gameBoard)
+    val set1 = gameBoard.head
+    val set2 = newBoard._2.last
+
+    assert(set1.filterNot(x => x ==(coordinate)) == set2)
+  }
 }
