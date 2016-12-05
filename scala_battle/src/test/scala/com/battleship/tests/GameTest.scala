@@ -1,9 +1,18 @@
+package com.battleship
 import org.scalatest.FunSuite
-import com.battleship.Game
+
 
 class GameSuite extends FunSuite {
-  test("A new default Game has 2 ships") {
-    val game = new Game()
-    assert(game.n === 2)
+  val game = new Game()
+
+  test("Barrage Test"){
+    val gameBoard = game.createBoard()
+    val coordinate = gameBoard.head.head
+
+    val newBoard = game.barrage(coordinate._1, coordinate._2, gameBoard)
+    val set1 = gameBoard.head
+    val set2 = newBoard._2.last
+
+    assert(set1.filterNot(x => x ==(coordinate)) == set2)
   }
 }
