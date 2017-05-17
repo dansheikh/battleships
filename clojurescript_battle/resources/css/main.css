@@ -1,0 +1,13 @@
+.clock {
+    margin: 1em;
+}
+
+.clock > .time.warning {
+    color: red;
+}
+
+.start {
+    margin: 1em;
+    width: 5em;
+    height: 2.5em;
+}
